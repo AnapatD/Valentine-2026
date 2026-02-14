@@ -13,3 +13,48 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+.container {
+  position: relative; /* <--- THIS IS REQUIRED */
+  overflow: hidden;   /* Prevents going off screen */
+}
+
+.no-button.escape {
+  position: fixed !important;
+  z-index: 9999;
+}
+
+.fireworks-container {
+  position: fixed;  /* stays behind everything */
+  inset: 0;         /* top:0; left:0; right:0; bottom:0 */
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;       /* behind all content */
+}
+
+.container, .question-card {
+  position: relative;
+  z-index: 10;   /* keeps them above fireworks */
+}
+
+.firework-gif-bg {
+  position: fixed;        /* stays in place and behind content */
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHA1NW9neGluOWlldWQyd2xlNHg3MDBkMmx2MXA1Znd2Y3preDA2cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tOZ42Mg6pbTUPHW/giphy.gif'); /* your GIF path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0; /* ensures it's behind text */
+  pointer-events: none; /* clicks pass through */
+}
+
+.celebration .message {
+  position: relative;
+  z-index: 10;  /* above the GIF */
+}
+
+

@@ -1,10 +1,10 @@
 <script>
   let accepted = false;
   let noButtonStyle = {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)'
+    position: "relative",
+    left: "0",
+    top: "0",
+    transform: "none",
   };
 
   function handleYes() {
@@ -13,45 +13,53 @@
   }
 
   function escapeNo() {
-    const maxX = window.innerWidth - 120;
-    const maxY = window.innerHeight - 60;
-    
+    const btn = document.querySelector(".no-button");
+
+    // Add escape class so it positions relative to body
+    btn.classList.add("escape");
+
+    const btnWidth = btn.offsetWidth;
+    const btnHeight = btn.offsetHeight;
+
+    const maxX = window.innerWidth - btnWidth;
+    const maxY = window.innerHeight - btnHeight;
+
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;
-    
+
     noButtonStyle = {
-      position: 'absolute',
+      position: "fixed",
       left: `${randomX}px`,
       top: `${randomY}px`,
-      transform: 'none'
+      transform: "none",
     };
   }
 
   function createFireworks() {
-    const container = document.querySelector('.fireworks-container');
-    
+    const container = document.querySelector(".fireworks-container");
+
     setInterval(() => {
-      const firework = document.createElement('div');
-      firework.className = 'firework';
-      firework.style.left = Math.random() * 100 + '%';
-      firework.style.top = Math.random() * 100 + '%';
+      const firework = document.createElement("div");
+      firework.className = "firework";
+      firework.style.left = Math.random() * 100 + "%";
+      firework.style.top = Math.random() * 100 + "%";
       container.appendChild(firework);
-      
+
       setTimeout(() => firework.remove(), 1000);
     }, 200);
   }
 </script>
+
+<div class="fireworks-container"></div>
 
 {#if !accepted}
   <div class="container">
     <div class="question-card">
       <h1 class="title">💕 Will you be my Valentine? 💕</h1>
       <div class="buttons-container">
-        <button class="yes-button" on:click={handleYes}>
-          Yes! 💖
-        </button>
-        <button 
-          class="no-button" 
+        <button class="yes-button" on:click={handleYes}> Yes! 💖 </button>
+        <button
+          class="no-button"
           style="left: {noButtonStyle.left}; top: {noButtonStyle.top}; transform: {noButtonStyle.transform}; position: {noButtonStyle.position};"
           on:mouseenter={escapeNo}
           on:click={escapeNo}
@@ -63,10 +71,10 @@
   </div>
 {:else}
   <div class="celebration">
-    <div class="fireworks-container"></div>
+    <div class="firework-gif-bg"></div>
     <div class="message">
       <h1 class="celebration-text">Good choice!</h1>
-      <h2 class="love-text">I love youuuu!!!!</h2>
+      <h2 class="love-text">I love youuuu my valentine!!!!</h2>
       <div class="hearts">
         <span class="heart">💕</span>
         <span class="heart">💖</span>
@@ -80,18 +88,23 @@
 
 <style>
   .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #ffecd2 100%);
-    position: relative;
-    overflow: hidden;
-  }
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url('./IMGs/BG.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+  overflow: hidden;
+}
 
   .question-card {
-    background: white;
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 60px 80px;
     border-radius: 30px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -115,7 +128,8 @@
     min-height: 60px;
   }
 
-  .yes-button, .no-button {
+  .yes-button,
+  .no-button {
     padding: 15px 40px;
     font-size: 1.3rem;
     border: none;
@@ -173,7 +187,7 @@
 
   @keyframes explode {
     0% {
-      box-shadow: 
+      box-shadow:
         0 0 0 0 #ff6b9d,
         0 0 0 0 #feca57,
         0 0 0 0 #48dbfb,
@@ -182,7 +196,7 @@
       opacity: 1;
     }
     100% {
-      box-shadow: 
+      box-shadow:
         0 -80px 40px 10px #ff6b9d,
         80px -40px 40px 10px #feca57,
         80px 40px 40px 10px #48dbfb,
@@ -223,7 +237,8 @@
   }
 
   @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
       transform: scale(1);
     }
     50% {
@@ -242,14 +257,25 @@
     animation: float 2s ease-in-out infinite;
   }
 
-  .heart:nth-child(1) { animation-delay: 0s; }
-  .heart:nth-child(2) { animation-delay: 0.2s; }
-  .heart:nth-child(3) { animation-delay: 0.4s; }
-  .heart:nth-child(4) { animation-delay: 0.6s; }
-  .heart:nth-child(5) { animation-delay: 0.8s; }
+  .heart:nth-child(1) {
+    animation-delay: 0s;
+  }
+  .heart:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .heart:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  .heart:nth-child(4) {
+    animation-delay: 0.6s;
+  }
+  .heart:nth-child(5) {
+    animation-delay: 0.8s;
+  }
 
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {
